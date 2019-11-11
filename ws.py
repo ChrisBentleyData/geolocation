@@ -9,10 +9,15 @@ class MyWebService(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
+    #@cherrypy.tools.accept(media='text/plain')
     def process(self):
+        print('Processing data now...')
         data = cherrypy.request.json
-        df = pd.DataFrame(data)
-        output = p.run(df)
+        print(data)
+        #addr = pd.DataFrame(data)
+        addr = str(data['addr'])
+        print('addr: '+ addr)
+        output = p.run(addr)     
         return output.to_json()
 
 if __name__ == '__main__':
