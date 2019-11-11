@@ -28,7 +28,7 @@ Note: This application is a work in progress and is not production ready. Update
      
    - Load the US State Shapefiles (also provided) into a PostGIS-enabled instance of PosgreSQL.
 ### 2. Edit and download python scripts
-   - myprocessor.py - This process the input from the webservice. Edit this script at the top to provide the following:
+   - myprocessor.py - This process the input from the webservice. Edit and save this script at the top to provide the following:
      - google_api_key - A google API Key  which is enabled to use the Geocoding API
      - dbname - The name of the PosgreSQL DB that has the shape table
      - user - PosgresSQL User that has permissions on the shape table
@@ -36,4 +36,23 @@ Note: This application is a work in progress and is not production ready. Update
      - shape_table - The fully identified shape table that was established in step 1.
      
    - ws.py - This is webservice script
+### 3. Start the webservice
+   - The webservice runs on localhost. Start it by running the script ws.py
+### 4. Call the service (POST)
+   - The service for Geo Location is called "process" - http://localhost:8080/process
+   - The service expects as input a json formatted in the following way: {"addr": "123 Any Street, Anytown, AnyState"}
+   - The return is json: {\"State\":{\"0\":\"AnyState\"}}
+   
+## Example using cURL
+Executing the following cURL command:
+
+curl -d '{"addr": "3535 Piedmont Rd NE, Atlanta, GA 30305"}' -H "Content-Type: application/json" -X POST http://localhost:8080/process
+
+We would get the following response:
+
+{\"State\":{\"0\":\"Georgia\"}}
+
+
+
+   
 
