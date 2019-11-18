@@ -7,16 +7,21 @@ p = myprocessor.MyProcessor()
 class MyWebService(object):
     
     @cherrypy.expose
+    
+    # Attach the json attributes to the request 
     @cherrypy.tools.json_out()
     @cherrypy.tools.json_in()
-    #@cherrypy.tools.accept(media='text/plain')
+
     def process(self):
         print('Processing data now...')
         data = cherrypy.request.json
         print(data)
-        #addr = pd.DataFrame(data)
+        
+        #Capture the address as string from input
         addr = str(data['addr'])
         print('addr: '+ addr)
+        
+        #process the address 
         output = p.run(addr)     
         return output.to_json()
 
